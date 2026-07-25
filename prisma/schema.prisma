@@ -1,0 +1,103 @@
+datasource db {
+  provider = "sqlite"
+}
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../server/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+model Merchant {
+  id               String       @id @default(uuid())
+  shopDomain       String       @unique
+  shopName         String
+  merchantName     String?
+  email            String?      @unique
+  shopifyPlan      String?
+  logo             String?
+  country          String?
+  currency         String?
+  timeZone         String?
+  installationDate DateTime     @default(now())
+  lastLogin        DateTime?
+  
+  subscription     Subscription?
+  settings         Settings?
+  announcements    Announcement[]
+  billingHistory   BillingHistory[]
+}
+
+model Subscription {
+  id           String   @id @default(uuid())
+  plan         String   @default("Free") // Free, Standard, Pro
+  status       String   @default("Active") // Active, Canceled, PastDue
+  renewalDate  DateTime?
+  merchantId   String   @unique
+  merchant     Merchant @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+}
+
+model Settings {
+  id           String   @id @default(uuid())
+  storeEmail   String?
+  appBlockEnabled Boolean @default(false)
+  merchantId   String   @unique
+  merchant     Merchant @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+}
+
+model Announcement {
+  id           String   @id @default(uuid())
+  name         String
+  category     String
+  templateName String
+  status       String   @default("Draft") // Draft, Active, Scheduled, Expired
+  position     String   @default("top") // top, bottom
+  
+  // Customization
+  message      String
+  buttonText   String?
+  customUrl    String?
+  bgColor      String   @default("#6D5EF7")
+  textColor    String   @default("#FFFFFF")
+  btnColor     String   @default("#111827")
+  
+  // Advanced Customization (Standard/Pro)
+  fontFamily   String?
+  roundedCorners String?
+  shadows      String?
+  gradientBg   String?
+  glowEffect   Boolean  @default(false)
+  animation    String?  // Fade, Slide, Pulse, Bounce
+  countdown    DateTime?
+  
+  // Scheduling
+  startDate    DateTime?
+  endDate      DateTime?
+  
+  merchantId   String
+  merchant     Merchant @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  
+  analytics    Analytics?
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Analytics {
+  id             String       @id @default(uuid())
+  views          Int          @default(0)
+  clicks         Int          @default(0)
+  ctr            Float        @default(0.0)
+  announcementId String       @unique
+  announcement   Announcement @relation(fields: [announcementId], references: [id], onDelete: Cascade)
+}
+
+model BillingHistory {
+  id           String   @id @default(uuid())
+  amount       Float
+  plan         String
+  status       String // Paid, Failed, Refunded
+  date         DateTime @default(now())
+  merchantId   String
+  merchant     Merchant @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+}
