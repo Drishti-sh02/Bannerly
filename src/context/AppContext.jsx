@@ -4,12 +4,18 @@ const AppContext = createContext();
 
 export function AppProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('isAuthenticated') === 'true';
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('isAuthenticated') === 'true';
+    }
+    return false;
   });
   
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('user');
-    return saved ? JSON.parse(saved) : null;
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('user');
+      return saved ? JSON.parse(saved) : null;
+    }
+    return null;
   });
 
   const [plan, setPlan] = useState('Free');

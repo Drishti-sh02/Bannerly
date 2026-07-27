@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router';
 import { LayoutDashboard, Megaphone, LayoutTemplate, CreditCard, Settings, HelpCircle, LogOut } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 
@@ -7,23 +7,25 @@ export default function Sidebar() {
   const navigate = useNavigate();
 
   const navItems = [
-    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { name: 'Announcements', path: '/announcements', icon: Megaphone },
-    { name: 'Templates', path: '/templates', icon: LayoutTemplate },
-    { name: 'Billing', path: '/billing', icon: CreditCard },
-    { name: 'Settings', path: '/settings', icon: Settings },
+    { name: 'Dashboard', path: '/app/dashboard', icon: LayoutDashboard },
+    { name: 'Templates', path: '/app/templates', icon: LayoutTemplate },
+    { name: 'Announcements', path: '/app/announcements', icon: Megaphone },
+    { name: 'Preview', path: '/app/preview', icon: LayoutDashboard }, // using a placeholder icon for now
+    { name: 'Billing', path: '/app/billing', icon: CreditCard },
+    { name: 'Settings', path: '/app/settings', icon: Settings },
+    { name: 'Help', path: '/app/help', icon: HelpCircle },
   ];
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/');
   };
 
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
         <div className="sidebar-logo">B</div>
-        <div className="h3">Bannerly</div>
+        <div className="h3 font-semibold" style={{ color: 'var(--color-primary)' }}>Bannerly</div>
       </div>
       
       <nav className="sidebar-nav">
@@ -31,6 +33,7 @@ export default function Sidebar() {
           <NavLink
             key={item.name}
             to={item.path}
+            end={item.path === '/app/dashboard'}
             className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
           >
             <item.icon size={20} />
@@ -40,13 +43,14 @@ export default function Sidebar() {
       </nav>
 
       <div className="sidebar-footer" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
-        <div className="card" style={{ padding: '12px', textAlign: 'center' }}>
-          <div className="text-small font-medium">{plan} Plan</div>
-          {plan === 'Free' && <div className="text-muted" style={{ fontSize: '11px', marginTop: '4px' }}>Upgrade for more features</div>}
+        <div className="card" style={{ padding: '16px', textAlign: 'center', backgroundColor: 'var(--color-background)', border: 'none' }}>
+          <div className="text-small font-semibold" style={{ color: 'var(--color-primary)' }}>{plan} Plan</div>
+          {plan === 'Free' && <div className="text-muted" style={{ fontSize: '11px', marginTop: '4px' }}>Upgrade to unlock features</div>}
         </div>
-        <button className="btn btn-secondary text-small" style={{ width: '100%' }} onClick={handleLogout}>
-          <LogOut size={14} style={{ marginRight: '8px' }} />
-          Logout
+        
+        <button className="btn btn-secondary text-small" style={{ width: '100%', justifyContent: 'center' }} onClick={handleLogout}>
+          <LogOut size={16} style={{ marginRight: '8px' }} />
+          Sign Out
         </button>
       </div>
     </aside>

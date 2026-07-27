@@ -4,17 +4,19 @@ import { useAppContext } from '../../context/AppContext';
 
 export default function Login() {
   const [shopDomain, setShopDomain] = useState('');
-  const [shopName, setShopName] = useState('');
-  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAppContext();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (shopDomain && email) {
+    if (shopDomain) {
       setLoading(true);
-      const success = await login({ shopDomain, shopName: shopName || shopDomain.split('.')[0], email });
+      const success = await login({ 
+        shopDomain, 
+        shopName: shopDomain.split('.')[0], 
+        email: 'admin@' + shopDomain 
+      });
       setLoading(false);
       if (success) {
         navigate('/oauth'); 
@@ -30,21 +32,13 @@ export default function Login() {
             B
           </div>
           <h1 className="h2">Install Bannerly</h1>
-          <p className="text-muted text-small" style={{ marginTop: 'var(--spacing-2)' }}>Enter your Shopify store details.</p>
+          <p className="text-muted text-small" style={{ marginTop: 'var(--spacing-2)' }}>Enter your Shopify store domain.</p>
         </div>
 
         <form onSubmit={handleLogin}>
           <div className="form-group">
             <label className="form-label">Shop Domain (.myshopify.com)</label>
             <input type="text" className="form-input" value={shopDomain} onChange={e => setShopDomain(e.target.value)} required placeholder="mystore.myshopify.com" />
-          </div>
-          <div className="form-group">
-            <label className="form-label">Store Name (Optional)</label>
-            <input type="text" className="form-input" value={shopName} onChange={e => setShopName(e.target.value)} placeholder="My Store" />
-          </div>
-          <div className="form-group">
-            <label className="form-label">Email address</label>
-            <input type="email" className="form-input" value={email} onChange={e => setEmail(e.target.value)} required placeholder="admin@mystore.com" />
           </div>
           
           <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: 'var(--spacing-4)' }} disabled={loading}>

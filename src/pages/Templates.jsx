@@ -1,33 +1,34 @@
 import React from 'react';
-import { Truck, Zap, Tag, Lock } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Lock, Crown } from 'lucide-react';
+import { useNavigate } from 'react-router';
+import { useAppContext } from '../context/AppContext';
 
 const templates = [
   {
-    category: '🚚 Shipping Offers',
+    category: 'Shipping Offers',
     items: [
       { id: 't1', name: 'General Shipping Offer', plan: 'Free', preview: 'Free Shipping on all orders!', color: '#FEE2E2', textColor: '#EF4444' },
-      { id: 't2', name: 'Free Shipping > $50', plan: 'Standard', preview: 'Free Shipping over $50', color: '#E0E7FF', textColor: '#4F46E5', locked: true },
-      { id: 't3', name: 'Express Delivery', plan: 'Standard', preview: 'Express Delivery Available', color: '#FEF3C7', textColor: '#D97706', locked: true },
-      { id: 't4', name: 'Same-Day Delivery', plan: 'Pro', preview: 'Order now for Same-Day Delivery', color: '#D1FAE5', textColor: '#059669', locked: true },
+      { id: 't2', name: 'Free Shipping > $50', plan: 'Pro', preview: 'Free Shipping over $50', color: '#E0E7FF', textColor: '#4F46E5' },
+      { id: 't3', name: 'Express Delivery', plan: 'Pro', preview: 'Express Delivery Available', color: '#FEF3C7', textColor: '#D97706' },
+      { id: 't4', name: 'Same-Day Delivery', plan: 'Premium', preview: 'Order now for Same-Day Delivery', color: '#D1FAE5', textColor: '#059669' },
     ]
   },
   {
-    category: '🔥 Flash Sales',
+    category: 'Flash Sales',
     items: [
       { id: 't5', name: 'General Flash Sale', plan: 'Free', preview: 'Flash Sale: 20% OFF!', color: '#FCE7F3', textColor: '#DB2777' },
-      { id: 't6', name: 'Flash Sale (Timer)', plan: 'Pro', preview: 'Ends in 02:45:10', color: '#FFEDD5', textColor: '#EA580C', locked: true },
-      { id: 't7', name: 'Mega Sale', plan: 'Standard', preview: 'Mega Sale up to 50% OFF', color: '#F3E8FF', textColor: '#9333EA', locked: true },
-      { id: 't8', name: 'Weekend Sale', plan: 'Standard', preview: 'Weekend Special: Buy 1 Get 1', color: '#E0F2FE', textColor: '#0284C7', locked: true },
+      { id: 't6', name: 'Flash Sale (Timer)', plan: 'Premium', preview: 'Ends in 02:45:10', color: '#FFEDD5', textColor: '#EA580C' },
+      { id: 't7', name: 'Mega Sale', plan: 'Pro', preview: 'Mega Sale up to 50% OFF', color: '#F3E8FF', textColor: '#9333EA' },
+      { id: 't8', name: 'Weekend Sale', plan: 'Pro', preview: 'Weekend Special: Buy 1 Get 1', color: '#E0F2FE', textColor: '#0284C7' },
     ]
   },
   {
-    category: '🎟 Discount Codes',
+    category: 'Discount Offers',
     items: [
       { id: 't9', name: 'General Discount Code', plan: 'Free', preview: 'Use Code WELCOME10', color: '#ECFCCB', textColor: '#65A30D' },
-      { id: 't10', name: 'Percentage Discount', plan: 'Standard', preview: 'Get 15% OFF your cart', color: '#FFE4E6', textColor: '#E11D48', locked: true },
-      { id: 't11', name: 'Flat Discount', plan: 'Standard', preview: '$10 OFF on $100+', color: '#F1F5F9', textColor: '#475569', locked: true },
-      { id: 't12', name: 'First Order Offer', plan: 'Pro', preview: '10% OFF your first order', color: '#E5E7EB', textColor: '#1F2937', locked: true },
+      { id: 't10', name: 'Percentage Discount', plan: 'Pro', preview: 'Get 15% OFF your cart', color: '#FFE4E6', textColor: '#E11D48' },
+      { id: 't11', name: 'Flat Discount', plan: 'Pro', preview: '$10 OFF on $100+', color: '#F1F5F9', textColor: '#475569' },
+      { id: 't12', name: 'First Order Offer', plan: 'Premium', preview: '10% OFF your first order', color: '#E5E7EB', textColor: '#1F2937' },
     ]
   }
 ];
@@ -37,64 +38,76 @@ export default function Templates() {
   const { plan } = useAppContext();
 
   const isLocked = (templatePlan) => {
-    if (plan === 'Pro') return false;
-    if (plan === 'Standard' && templatePlan === 'Pro') return true;
+    if (plan === 'Premium') return false;
+    if (plan === 'Pro' && templatePlan === 'Premium') return true;
     if (plan === 'Free' && templatePlan !== 'Free') return true;
     return false;
   };
 
   return (
-    <div>
-      <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-6)' }}>
+    <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-8)' }}>
         <div>
-          <h1 className="h1">Templates</h1>
+          <h1 className="h1 font-semibold">Templates</h1>
           <p className="text-muted" style={{ marginTop: 'var(--spacing-1)' }}>Choose a template to start building your announcement.</p>
         </div>
       </div>
 
       {templates.map((section, idx) => (
-        <div key={idx} style={{ marginBottom: 'var(--spacing-8)' }}>
-          <h2 className="h2" style={{ marginBottom: 'var(--spacing-4)' }}>{section.category}</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: 'var(--spacing-4)' }}>
+        <div key={idx} style={{ marginBottom: 'var(--spacing-10)' }}>
+          <h2 className="h2 font-semibold" style={{ marginBottom: 'var(--spacing-4)', color: 'var(--color-text-main)' }}>{section.category}</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 'var(--spacing-6)' }}>
             {section.items.map((item) => {
               const locked = isLocked(item.plan);
               return (
-              <div key={item.id} className="card flex-col" style={{ display: 'flex', gap: 'var(--spacing-4)', position: 'relative' }}>
+              <div 
+                key={item.id} 
+                className="card flex-col" 
+                style={{ 
+                  display: 'flex', 
+                  gap: 'var(--spacing-4)', 
+                  position: 'relative',
+                  transition: 'transform 0.2s, box-shadow 0.2s',
+                  cursor: 'default'
+                }}
+                onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = 'var(--shadow-md)'; }}
+                onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+              >
                 <div style={{
-                  height: '60px',
+                  height: '80px',
                   backgroundColor: item.color,
                   color: item.textColor,
-                  borderRadius: 'var(--radius-sm)',
+                  borderRadius: 'var(--radius-md)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontWeight: '600',
-                  fontSize: '13px'
+                  fontSize: '14px',
+                  opacity: locked ? 0.6 : 1
                 }}>
                   {item.preview}
                 </div>
                 
-                <div className="flex-col gap-2">
-                  <div className="font-semibold">{item.name}</div>
-                  <div className="flex justify-between items-center">
+                <div className="flex-col gap-2" style={{ flex: 1 }}>
+                  <div className="font-semibold h3">{item.name}</div>
+                  <div className="flex justify-between items-center mt-2">
                     <span className={`badge ${item.plan === 'Free' ? 'badge-success' : item.plan === 'Pro' ? 'badge-primary' : 'badge-warning'}`}>
+                      {item.plan === 'Premium' && <Crown size={12} style={{ marginRight: '4px' }} />}
                       {item.plan}
                     </span>
-                    {locked && (
-                      <div className="flex items-center gap-1 text-muted text-small">
-                        <Lock size={12} />
-                        <span>Upgrade</span>
-                      </div>
-                    )}
                   </div>
                 </div>
                 
                 <button 
                   className={`btn ${locked ? 'btn-secondary' : 'btn-primary'}`} 
-                  style={{ width: '100%', marginTop: 'auto' }}
-                  onClick={() => locked ? navigate('/billing') : navigate('/create', { state: { template: item } })}
+                  style={{ width: '100%', marginTop: 'var(--spacing-2)' }}
+                  onClick={() => locked ? navigate('/app/billing') : navigate('/app/create', { state: { template: item } })}
                 >
-                  {locked ? 'Unlock Template' : 'Use Template'}
+                  {locked ? (
+                    <div className="flex items-center justify-center gap-2 text-warning">
+                      <Lock size={16} /> Unlock Template
+                    </div>
+                  ) : 'Use Template'}
                 </button>
               </div>
             )})}

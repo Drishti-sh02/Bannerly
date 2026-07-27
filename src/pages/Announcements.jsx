@@ -8,18 +8,18 @@ export default function Announcements() {
   const { announcements, deleteAnnouncement, duplicateAnnouncement, loading } = useAppContext();
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredAnnouncements = announcements.filter(a => 
+  const filteredAnnouncements = (announcements || []).filter(a => 
     a.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
     <div>
-      <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-6)' }}>
+      <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-8)' }}>
         <div>
-          <h1 className="h1">Announcements</h1>
+          <h1 className="h1 font-semibold">Announcements</h1>
           <p className="text-muted" style={{ marginTop: 'var(--spacing-1)' }}>Manage all your active and scheduled announcements.</p>
         </div>
-        <button className="btn btn-primary" onClick={() => navigate('/templates')}>Create Announcement</button>
+        <button className="btn btn-primary" style={{ borderRadius: 'var(--radius-full)' }} onClick={() => navigate('/app/templates')}>New Banner</button>
       </div>
 
       <div className="card">

@@ -146,7 +146,7 @@ export default function CreateAnnouncement() {
             </select>
           </div>
 
-          {(plan === 'Standard' || plan === 'Pro') && (
+          {(plan === 'Pro' || plan === 'Premium') && (
             <>
               <div style={{ height: '1px', backgroundColor: 'var(--color-border)', margin: 'var(--spacing-6) 0' }}></div>
               <h3 className="h3" style={{ marginBottom: 'var(--spacing-4)' }}>Advanced Styling</h3>
@@ -167,7 +167,7 @@ export default function CreateAnnouncement() {
             </>
           )}
 
-          {plan === 'Pro' && (
+          {plan === 'Premium' && (
             <>
               <div className="flex gap-4">
                 <div className="form-group" style={{ flex: 1 }}>
