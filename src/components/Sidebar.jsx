@@ -7,13 +7,11 @@ export default function Sidebar() {
   const navigate = useNavigate();
 
   const navItems = [
-    { name: 'Dashboard', path: '/app/dashboard', icon: LayoutDashboard },
-    { name: 'Templates', path: '/app/templates', icon: LayoutTemplate },
-    { name: 'Announcements', path: '/app/announcements', icon: Megaphone },
-    { name: 'Preview', path: '/app/preview', icon: LayoutDashboard }, // using a placeholder icon for now
-    { name: 'Billing', path: '/app/billing', icon: CreditCard },
-    { name: 'Settings', path: '/app/settings', icon: Settings },
-    { name: 'Help', path: '/app/help', icon: HelpCircle },
+    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+    { name: 'Create Banner', path: '/create', icon: LayoutTemplate },
+    { name: 'Announcements', path: '/announcements', icon: Megaphone },
+    { name: 'Billing', path: '/billing', icon: CreditCard },
+    { name: 'Settings', path: '/settings', icon: Settings }
   ];
 
   const handleLogout = () => {
@@ -33,7 +31,7 @@ export default function Sidebar() {
           <NavLink
             key={item.name}
             to={item.path}
-            end={item.path === '/app/dashboard'}
+            end={item.path === '/dashboard'}
             className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
           >
             <item.icon size={20} />

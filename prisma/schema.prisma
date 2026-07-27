@@ -3,9 +3,7 @@ datasource db {
 }
 
 generator client {
-  provider     = "prisma-client"
-  output       = "../server/generated/prisma"
-  moduleFormat = "cjs"
+  provider = "prisma-client-js"
 }
 
 model Merchant {
@@ -54,12 +52,16 @@ model Announcement {
   position     String   @default("top") // top, bottom
   
   // Customization
+  heading      String?
   message      String
   buttonText   String?
   customUrl    String?
   bgColor      String   @default("#6D5EF7")
   textColor    String   @default("#FFFFFF")
   btnColor     String   @default("#111827")
+  fontSize     String   @default("14px")
+  fontWeight   String   @default("normal")
+  icon         String?
   
   // Advanced Customization (Standard/Pro)
   fontFamily   String?
@@ -69,6 +71,9 @@ model Announcement {
   glowEffect   Boolean  @default(false)
   animation    String?  // Fade, Slide, Pulse, Bounce
   countdown    DateTime?
+  
+  // Premium Configurations (JSON stored as String)
+  premiumConfig String?
   
   // Scheduling
   startDate    DateTime?

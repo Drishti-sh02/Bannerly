@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
 import Announcements from './pages/Announcements';
-import Templates from './pages/Templates';
+
 import CreateAnnouncement from './pages/CreateAnnouncement';
 import Billing from './pages/Billing';
 import Settings from './pages/Settings';
@@ -24,7 +24,7 @@ function App() {
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/announcements" element={<Announcements />} />
-        <Route path="/templates" element={<Templates />} />
+
         <Route path="/create" element={<CreateAnnouncement />} />
         <Route path="/edit/:id" element={<CreateAnnouncement />} />
         <Route path="/billing" element={<Billing />} />

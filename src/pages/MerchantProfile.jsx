@@ -60,7 +60,7 @@ export default function MerchantProfile() {
         </div>
 
         <div className="flex gap-4" style={{ paddingTop: 'var(--spacing-4)', marginTop: 'var(--spacing-2)', borderTop: '1px solid var(--color-border)' }}>
-          <button className="btn btn-primary" onClick={() => navigate('/app/settings')}>
+          <button className="btn btn-primary" onClick={() => navigate('/settings')}>
             <Edit size={16} />
             Edit Profile
           </button>

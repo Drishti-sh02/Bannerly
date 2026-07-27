@@ -25,17 +25,17 @@ export default function Dashboard() {
         <div 
           className="card" 
           style={{ cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s', display: 'flex', flexDirection: 'column', height: '100%' }}
-          onClick={() => navigate('/app/templates')}
+          onClick={() => navigate('/create')}
           onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = 'var(--shadow-md)'; }}
           onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
         >
           <div style={{ width: '48px', height: '48px', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--color-primary-light)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 'var(--spacing-4)' }}>
             <LayoutTemplate size={24} />
           </div>
-          <h2 className="h2 font-semibold" style={{ marginBottom: 'var(--spacing-2)' }}>Use Template</h2>
-          <p className="text-muted text-small" style={{ marginBottom: 'var(--spacing-6)', flex: 1 }}>Browse our collection of high-converting banner templates for your store.</p>
+          <h2 className="h2 font-semibold" style={{ marginBottom: 'var(--spacing-2)' }}>Create Banner</h2>
+          <p className="text-muted text-small" style={{ marginBottom: 'var(--spacing-6)', flex: 1 }}>Build a custom, high-converting banner for your store using our unified editor.</p>
           <div className="flex items-center gap-2 font-semibold" style={{ color: 'var(--color-primary)', fontSize: '14px' }}>
-            Browse Templates <ArrowRight size={16} />
+            Open Editor <ArrowRight size={16} />
           </div>
         </div>
 
@@ -43,7 +43,7 @@ export default function Dashboard() {
         <div 
           className="card" 
           style={{ cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s', display: 'flex', flexDirection: 'column', height: '100%' }}
-          onClick={() => navigate('/app/announcements')}
+          onClick={() => navigate('/announcements')}
           onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = 'var(--shadow-md)'; }}
           onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
         >
@@ -61,7 +61,9 @@ export default function Dashboard() {
         <div 
           className="card" 
           style={{ cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s', display: 'flex', flexDirection: 'column', height: '100%' }}
-          onClick={() => navigate('/app/preview')}
+          onClick={() => {
+            if (shop) window.open(`https://${shop}`, '_blank');
+          }}
           onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = 'var(--shadow-md)'; }}
           onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
         >

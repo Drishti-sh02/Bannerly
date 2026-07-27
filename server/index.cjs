@@ -1,13 +1,11 @@
 const express = require('express');
 const cors = require('cors');
-const { PrismaClient } = require('./generated/prisma/client');
+const { PrismaClient } = require('@prisma/client');
 const { PrismaBetterSqlite3 } = require('@prisma/adapter-better-sqlite3');
-const Database = require('better-sqlite3');
 require('dotenv').config();
 
 const app = express();
-const db = new Database('./dev.db');
-const adapter = new PrismaBetterSqlite3(db);
+const adapter = new PrismaBetterSqlite3({ url: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 const PORT = process.env.PORT || 3001;
 
@@ -58,8 +56,8 @@ app.post('/api/auth/login', async (req, res) => {
 
     res.json(merchant);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to authenticate' });
+    console.log(error);
+    res.status(500).json({ error: 'Failed to authenticate', details: error.message, stack: error.stack });
   }
 });
 
@@ -288,3 +286,4 @@ app.get('/api/storefront/active-banner/:shopDomain', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+setInterval(() => {}, 1000 * 60 * 60);

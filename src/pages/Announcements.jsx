@@ -19,7 +19,7 @@ export default function Announcements() {
           <h1 className="h1 font-semibold">Announcements</h1>
           <p className="text-muted" style={{ marginTop: 'var(--spacing-1)' }}>Manage all your active and scheduled announcements.</p>
         </div>
-        <button className="btn btn-primary" style={{ borderRadius: 'var(--radius-full)' }} onClick={() => navigate('/app/templates')}>New Banner</button>
+        <button className="btn btn-primary" style={{ borderRadius: 'var(--radius-full)' }} onClick={() => navigate('/templates')}>New Banner</button>
       </div>
 
       <div className="card">
