@@ -37,6 +37,7 @@ if (host === "localhost") {
 
 export default defineConfig({
   server: {
+    host: "127.0.0.1",
     allowedHosts: [host],
     cors: {
       preflightContinue: true,
@@ -60,6 +61,9 @@ export default defineConfig({
         replacement: '@shopify/shopify-api/dist/cjs/runtime/$1.js'
       }
     ]
+  },
+  ssr: {
+    noExternal: ['lucide-react'],
   },
   build: {
     assetsInlineLimit: 0,
