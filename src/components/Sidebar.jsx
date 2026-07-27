@@ -1,22 +1,26 @@
-import { NavLink, useNavigate } from 'react-router';
+import { NavLink, useNavigate, useLocation } from 'react-router';
 import { LayoutDashboard, Megaphone, LayoutTemplate, CreditCard, Settings, HelpCircle, LogOut } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 
 export default function Sidebar() {
   const { plan, logout } = useAppContext();
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  const isShopify = location.pathname.startsWith('/app');
+  const basePath = isShopify ? '/app' : '';
 
   const navItems = [
-    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { name: 'Create Banner', path: '/create', icon: LayoutTemplate },
-    { name: 'Announcements', path: '/announcements', icon: Megaphone },
-    { name: 'Billing', path: '/billing', icon: CreditCard },
-    { name: 'Settings', path: '/settings', icon: Settings }
+    { name: 'Dashboard', path: `${basePath}/dashboard`, icon: LayoutDashboard },
+    { name: 'Create Banner', path: `${basePath}/create`, icon: LayoutTemplate },
+    { name: 'Announcements', path: `${basePath}/announcements`, icon: Megaphone },
+    { name: 'Billing', path: `${basePath}/billing`, icon: CreditCard },
+    { name: 'Settings', path: `${basePath}/settings`, icon: Settings }
   ];
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate(isShopify ? '/app/auth/login' : '/');
   };
 
   return (

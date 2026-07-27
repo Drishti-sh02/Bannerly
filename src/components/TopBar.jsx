@@ -1,10 +1,13 @@
 import { Plus, Bell, User, Crown } from 'lucide-react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { useAppContext } from '../context/AppContext';
 
 export default function TopBar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { plan, shop } = useAppContext();
+  
+  const basePath = location.pathname.startsWith('/app') ? '/app' : '';
 
   return (
     <header className="topbar">
@@ -14,7 +17,7 @@ export default function TopBar() {
       </div>
       
       <div className="flex items-center gap-6">
-        <button className="btn btn-primary" style={{ borderRadius: 'var(--radius-full)' }} onClick={() => navigate('/create')}>
+        <button className="btn btn-primary" style={{ borderRadius: 'var(--radius-full)' }} onClick={() => navigate(`${basePath}/create`)}>
           <Plus size={16} />
           <span>New Banner</span>
         </button>
@@ -34,7 +37,7 @@ export default function TopBar() {
         
         <div 
           className="flex items-center gap-3 cursor-pointer" 
-          onClick={() => navigate('/merchant-profile')}
+          onClick={() => navigate(`${basePath}/merchant-profile`)}
           style={{ cursor: 'pointer', padding: '4px', borderRadius: 'var(--radius-full)', transition: 'background-color 0.2s' }}
           onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'var(--color-background)'} 
           onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}

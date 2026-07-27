@@ -1,11 +1,13 @@
 import React from 'react';
 import { useAppContext } from '../context/AppContext';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { LayoutTemplate, Megaphone, Eye, ArrowRight } from 'lucide-react';
 
 export default function Dashboard() {
   const { announcements, shop } = useAppContext();
   const navigate = useNavigate();
+  const location = useLocation();
+  const basePath = location.pathname.startsWith('/app') ? '/app' : '';
 
   const merchantName = shop ? shop.replace('.myshopify.com', '') : 'Merchant';
   const activeCount = (announcements || []).filter(a => a.status === 'Active').length;
@@ -25,7 +27,7 @@ export default function Dashboard() {
         <div 
           className="card" 
           style={{ cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s', display: 'flex', flexDirection: 'column', height: '100%' }}
-          onClick={() => navigate('/create')}
+          onClick={() => navigate(`${basePath}/create`)}
           onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = 'var(--shadow-md)'; }}
           onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
         >
@@ -43,7 +45,7 @@ export default function Dashboard() {
         <div 
           className="card" 
           style={{ cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s', display: 'flex', flexDirection: 'column', height: '100%' }}
-          onClick={() => navigate('/announcements')}
+          onClick={() => navigate(`${basePath}/announcements`)}
           onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = 'var(--shadow-md)'; }}
           onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
         >
