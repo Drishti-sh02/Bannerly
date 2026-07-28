@@ -2,7 +2,7 @@
 
 client_id = "98a038c30b419bc98fadaf00975804ae"
 name = "bannerly"
-application_url = "https://shopify.dev/apps/default-app-home"
+application_url = "https://bannerly-nu.vercel.app"
 embedded = true
 
 [access_scopes]
@@ -45,7 +45,11 @@ api_version = "2026-10"
   topics = [ "app/scopes_update" ]
 
 [auth]
-redirect_urls = [ "https://shopify.dev/apps/default-app-home/api/auth" ]
+redirect_urls = [
+"https://bannerly-nu.vercel.app/auth/callback",
+"https://bannerly-nu.vercel.app/auth/shopify/callback",
+"https://bannerly-nu.vercel.app/api/auth"
+]
 
 [build]
 automatically_update_urls_on_dev = true
