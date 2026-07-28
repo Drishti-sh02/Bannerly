@@ -2,6 +2,7 @@ import React from 'react';
 import { useAppContext } from '../context/AppContext';
 import { useNavigate, useLocation } from 'react-router';
 import { LayoutTemplate, Megaphone, Eye, ArrowRight } from 'lucide-react';
+import { Page, Layout, Text, BlockStack } from '@shopify/polaris';
 
 export default function Dashboard() {
   const { announcements, shop } = useAppContext();
@@ -13,15 +14,10 @@ export default function Dashboard() {
   const activeCount = (announcements || []).filter(a => a.status === 'Active').length;
 
   return (
-    <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-      <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-8)' }}>
-        <div>
-          <h1 className="h1 font-semibold">Welcome back, {merchantName} 👋</h1>
-          <p className="text-muted" style={{ marginTop: 'var(--spacing-1)' }}>Manage your store's banners and announcements.</p>
-        </div>
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--spacing-6)' }}>
+    <Page title={`Welcome back, ${merchantName} 👋`} subtitle="Manage your store's banners and announcements.">
+      <Layout>
+        <Layout.Section>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--spacing-6)', marginTop: 'var(--spacing-4)' }}>
         
         {/* Card 1: Use Template */}
         <div 
@@ -79,7 +75,9 @@ export default function Dashboard() {
           </div>
         </div>
 
-      </div>
-    </div>
+          </div>
+        </Layout.Section>
+      </Layout>
+    </Page>
   );
 }

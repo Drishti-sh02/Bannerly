@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { Save, Store, Globe } from 'lucide-react';
+import { Page, Layout } from '@shopify/polaris';
 
 export default function Settings() {
   const { user } = useAppContext();
@@ -53,18 +54,18 @@ export default function Settings() {
   };
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-      <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-8)' }}>
-        <div>
-          <h1 className="h1 font-semibold">Settings</h1>
-          <p className="text-muted" style={{ marginTop: 'var(--spacing-1)' }}>Manage your default preferences and store configuration.</p>
-        </div>
-        <button className="btn btn-primary" style={{ borderRadius: 'var(--radius-full)' }} onClick={handleSave} disabled={saving}>
-          <Save size={16} />
-          {saving ? 'Saving...' : 'Save Changes'}
-        </button>
-      </div>
-
+    <Page 
+      title="Settings" 
+      subtitle="Manage your default preferences and store configuration."
+      primaryAction={{
+        content: saving ? 'Saving...' : 'Save Changes',
+        onAction: handleSave,
+        disabled: saving,
+        icon: <Save size={16} />
+      }}
+    >
+      <Layout>
+        <Layout.Section>
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-6)' }}>
         
         <div>
@@ -125,7 +126,9 @@ export default function Settings() {
           </div>
         </div>
         
-      </div>
-    </div>
+        </div>
+        </Layout.Section>
+      </Layout>
+    </Page>
   );
 }

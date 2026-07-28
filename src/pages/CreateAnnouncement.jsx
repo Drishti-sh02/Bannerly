@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Store, Calendar, ArrowLeft, Tag, Truck, Zap, Megaphone, Clock } from 'lucide-react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
+import { Page, Layout } from '@shopify/polaris';
 
 const HEADING_PRESETS = [
   "Flash Sale", "Mega Sale", "Weekend Sale", "Free Shipping", 
@@ -118,21 +119,26 @@ export default function CreateAnnouncement() {
   const IconComponent = ICONS[formData.icon] || null;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px - 64px)' }}>
-      <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-4)' }}>
-        <div className="flex items-center gap-3">
-          <button className="btn btn-secondary" onClick={() => navigate(-1)} style={{ padding: '8px' }}>
-            <ArrowLeft size={18} />
-          </button>
-          <h1 className="h2">{id ? 'Edit Announcement' : 'Create Announcement'}</h1>
-        </div>
-        <div className="flex gap-2">
-          <button className="btn btn-secondary" onClick={() => handleSave(true)} disabled={saving}>Save Draft</button>
-          <button className="btn btn-primary" onClick={() => handleSave(false)} disabled={saving}>
-            {saving ? 'Saving...' : 'Publish'}
-          </button>
-        </div>
-      </div>
+    <Page
+      fullWidth
+      backAction={{ content: 'Back', onAction: () => navigate(-1) }}
+      title={id ? 'Edit Announcement' : 'Create Announcement'}
+      primaryAction={{
+        content: saving ? 'Saving...' : 'Publish',
+        onAction: () => handleSave(false),
+        disabled: saving
+      }}
+      secondaryActions={[
+        {
+          content: 'Save Draft',
+          onAction: () => handleSave(true),
+          disabled: saving
+        }
+      ]}
+    >
+      <Layout>
+        <Layout.Section>
+      <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 120px)' }}>
 
       <div style={{ display: 'flex', gap: 'var(--spacing-6)', flex: 1, overflow: 'hidden' }}>
         {/* Left Panel - Editor */}
@@ -688,7 +694,10 @@ export default function CreateAnnouncement() {
             )}
           </div>
         </div>
+        </div>
       </div>
-    </div>
+        </Layout.Section>
+      </Layout>
+    </Page>
   );
 }

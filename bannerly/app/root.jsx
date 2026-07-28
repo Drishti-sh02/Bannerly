@@ -1,6 +1,9 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "react-router";
 import { AppProvider as CustomAppProvider } from "../../src/context/AppContext.jsx";
 import { AppProvider as ShopifyAppProvider } from "@shopify/shopify-app-react-router/react";
+import { AppProvider as PolarisProvider } from "@shopify/polaris";
+import polarisStyles from "@shopify/polaris/build/esm/styles.css?url";
+import enTranslations from "@shopify/polaris/locales/en.json";
 import appStyles from "../../src/App.css?url";
 import indexStyles from "../../src/index.css?url";
 
@@ -9,8 +12,9 @@ export const loader = async () => {
 };
 
 export const links = () => [
-  { rel: "stylesheet", href: appStyles },
+  { rel: "stylesheet", href: polarisStyles },
   { rel: "stylesheet", href: indexStyles },
+  { rel: "stylesheet", href: appStyles },
 ];
 
 export default function App() {
@@ -19,7 +23,6 @@ export default function App() {
   return (
     <html lang="en">
       <head>
-        <script src="https://cdn.shopify.com/shopifycloud/app-bridge.js" data-api-key={data?.apiKey}></script>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <link rel="preconnect" href="https://cdn.shopify.com/" />
@@ -31,10 +34,12 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <ShopifyAppProvider isEmbeddedApp apiKey={data.apiKey}>
-          <CustomAppProvider>
-            <Outlet />
-          </CustomAppProvider>
+        <ShopifyAppProvider embedded apiKey={data.apiKey}>
+          <PolarisProvider i18n={enTranslations}>
+            <CustomAppProvider>
+              <Outlet />
+            </CustomAppProvider>
+          </PolarisProvider>
         </ShopifyAppProvider>
         <ScrollRestoration />
         <Scripts />

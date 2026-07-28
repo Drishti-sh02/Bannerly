@@ -2,6 +2,7 @@ import React from 'react';
 import { Lock, Crown } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { useAppContext } from '../context/AppContext';
+import { Page, Layout } from '@shopify/polaris';
 
 const templates = [
   {
@@ -45,13 +46,9 @@ export default function Templates() {
   };
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-      <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-8)' }}>
-        <div>
-          <h1 className="h1 font-semibold">Templates</h1>
-          <p className="text-muted" style={{ marginTop: 'var(--spacing-1)' }}>Choose a template to start building your announcement.</p>
-        </div>
-      </div>
+    <Page title="Templates" subtitle="Choose a template to start building your announcement.">
+      <Layout>
+        <Layout.Section>
 
       {templates.map((section, idx) => (
         <div key={idx} style={{ marginBottom: 'var(--spacing-10)' }}>
@@ -114,6 +111,8 @@ export default function Templates() {
           </div>
         </div>
       ))}
-    </div>
+        </Layout.Section>
+      </Layout>
+    </Page>
   );
 }

@@ -1,6 +1,11 @@
 import { reactRouter } from "@react-router/dev/vite";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Related: https://github.com/remix-run/remix/issues/2835#issuecomment-1144102176
 // Replace the HOST env var with SHOPIFY_APP_URL so that it doesn't break the Vite server.
@@ -59,11 +64,31 @@ export default defineConfig({
       {
         find: /@shopify\/shopify-api\/dist\/esm\/runtime\/(.*)/,
         replacement: '@shopify/shopify-api/dist/cjs/runtime/$1.js'
+      },
+      {
+        find: '@shopify/polaris',
+        replacement: path.resolve(__dirname, 'node_modules/@shopify/polaris')
+      },
+      {
+        find: '@shopify/app-bridge-react',
+        replacement: path.resolve(__dirname, 'node_modules/@shopify/app-bridge-react')
+      },
+      {
+        find: 'react',
+        replacement: path.resolve(__dirname, 'node_modules/react')
+      },
+      {
+        find: 'react-dom',
+        replacement: path.resolve(__dirname, 'node_modules/react-dom')
+      },
+      {
+        find: 'react-router',
+        replacement: path.resolve(__dirname, 'node_modules/react-router')
       }
     ]
   },
   ssr: {
-    noExternal: ['lucide-react'],
+    noExternal: ['lucide-react', '@shopify/polaris'],
   },
   build: {
     assetsInlineLimit: 0,

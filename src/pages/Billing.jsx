@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Check, Star, Zap, X } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
+import { Page, Layout } from '@shopify/polaris';
 
 export default function Billing() {
   const { plan, updateSubscription } = useAppContext();
@@ -22,7 +23,7 @@ export default function Billing() {
   const prices = { Free: '$0', Pro: '$9.99', Premium: '$19.99' };
 
   return (
-    <div style={{ maxWidth: '1000px', margin: '0 auto', paddingBottom: '40px' }}>
+    <Page title="Billing & Subscription" subtitle="Manage your subscription plan and unlock premium features.">
       
       {/* Modern Success Modal */}
       {showModal && (
@@ -41,12 +42,8 @@ export default function Billing() {
         </div>
       )}
 
-      <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-8)' }}>
-        <div>
-          <h1 className="h1 font-semibold">Billing & Subscription</h1>
-          <p className="text-muted" style={{ marginTop: 'var(--spacing-1)' }}>Manage your subscription plan and unlock premium features.</p>
-        </div>
-      </div>
+      <Layout>
+        <Layout.Section>
 
       <div className="card flex justify-between items-center" style={{ marginBottom: 'var(--spacing-8)', borderLeft: '4px solid var(--color-primary)' }}>
         <div>
@@ -145,6 +142,8 @@ export default function Billing() {
         </div>
 
       </div>
-    </div>
+        </Layout.Section>
+      </Layout>
+    </Page>
   );
 }

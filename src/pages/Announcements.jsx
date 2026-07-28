@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Search, Filter, Edit, Trash2, Copy } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
+import { Page, Layout } from '@shopify/polaris';
 
 export default function Announcements() {
   const navigate = useNavigate();
@@ -13,16 +14,17 @@ export default function Announcements() {
   );
 
   return (
-    <div>
-      <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-8)' }}>
-        <div>
-          <h1 className="h1 font-semibold">Announcements</h1>
-          <p className="text-muted" style={{ marginTop: 'var(--spacing-1)' }}>Manage all your active and scheduled announcements.</p>
-        </div>
-        <button className="btn btn-primary" style={{ borderRadius: 'var(--radius-full)' }} onClick={() => navigate('/templates')}>New Banner</button>
-      </div>
-
-      <div className="card">
+    <Page 
+      title="Announcements" 
+      subtitle="Manage all your active and scheduled announcements."
+      primaryAction={{
+        content: 'New Banner',
+        onAction: () => navigate('/templates')
+      }}
+    >
+      <Layout>
+        <Layout.Section>
+          <div className="card">
         <div className="flex justify-between items-center" style={{ marginBottom: 'var(--spacing-4)' }}>
           <div className="flex items-center gap-2" style={{ width: '300px' }}>
             <div style={{ position: 'relative', width: '100%' }}>
@@ -91,7 +93,9 @@ export default function Announcements() {
             </tbody>
           </table>
         </div>
-      </div>
-    </div>
+          </div>
+        </Layout.Section>
+      </Layout>
+    </Page>
   );
 }
