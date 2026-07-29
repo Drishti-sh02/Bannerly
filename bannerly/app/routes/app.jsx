@@ -14,7 +14,7 @@ export default function App() {
     <>
       <ui-nav-menu>
         <a href="/app/dashboard" rel="home">Dashboard</a>
-        <a href="/app/templates">Create Banner</a>
+        <a href="/app/create">Create Banner</a>
         <a href="/app/announcements">Announcements</a>
         <a href="/app/billing">Billing</a>
         <a href="/app/settings">Settings</a>
