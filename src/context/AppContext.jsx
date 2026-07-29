@@ -77,19 +77,10 @@ export function AppProvider({ children }) {
 
   const login = async (userData) => {
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData)
-      });
-      if (res.ok) {
-        const merchant = await res.json();
-        setUser(merchant);
-        setIsAuthenticated(true);
-        setPlan(merchant.subscription?.plan || 'Free');
-        return true;
-      }
-      return false;
+      // Direct approach: redirect to the Shopify app login route
+      window.location.href = `/auth/login?shop=${userData.shopDomain}`;
+      // Return a promise that doesn't resolve to prevent further state updates while navigating away
+      return new Promise(() => {});
     } catch (err) {
       console.error("Login failed", err);
       return false;
