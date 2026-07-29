@@ -53,7 +53,7 @@ export default function Announcements() {
       subtitle="Manage all your active and scheduled announcements."
       primaryAction={{
         content: 'Create Banner',
-        onAction: () => navigate('/create')
+        onAction: () => navigate('/app/create')
       }}
     >
       <Layout>
@@ -136,7 +136,7 @@ export default function Announcements() {
                             )}
                             <button onClick={() => { setSelectedHistory(item); setHistoryModalOpen(true); }} title="History" style={{ padding: '4px', cursor: 'pointer' }}><Activity size={16} /></button>
                             <button onClick={() => duplicateAnnouncement(item.id)} title="Duplicate" style={{ padding: '4px', cursor: 'pointer' }}><Copy size={16} /></button>
-                            <button onClick={() => navigate(`/edit/${item.id}`)} title="Edit" style={{ padding: '4px', cursor: 'pointer' }}><Edit size={16} /></button>
+                            <button onClick={() => navigate(`/app/edit/${item.id}`)} title="Edit" style={{ padding: '4px', cursor: 'pointer' }}><Edit size={16} /></button>
                             <button onClick={() => { if(window.confirm('Delete this banner?')) deleteAnnouncement(item.id) }} title="Delete" style={{ padding: '4px', cursor: 'pointer', color: 'red' }}><Trash2 size={16} /></button>
                           </div>
                         </td>

@@ -145,7 +145,7 @@ export default function CreateAnnouncement() {
     
     setSaving(false);
     if (res?.success) {
-      navigate('/announcements');
+      navigate('/app/announcements');
     } else {
       alert(res?.error || "Failed to save announcement.");
     }
