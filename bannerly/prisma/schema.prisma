@@ -32,3 +32,29 @@ model Session {
   refreshToken        String?
   refreshTokenExpires DateTime?
 }
+
+model Announcement {
+  id              String   @id @default(uuid())
+  shop            String
+  name            String
+  status          String   @default("Draft")
+  position        String   @default("Top")
+  configuration   Json
+  targetPages     Json?
+  planUsed        String   @default("Free")
+  views           Int      @default(0)
+  clicks          Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  publishedAt     DateTime?
+  scheduledAt     DateTime?
+  history         PublishingHistory[]
+}
+
+model PublishingHistory {
+  id              String   @id @default(uuid())
+  announcementId  String
+  announcement    Announcement @relation(fields: [announcementId], references: [id], onDelete: Cascade)
+  status          String
+  createdAt       DateTime @default(now())
+}

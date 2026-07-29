@@ -14,7 +14,7 @@ export const AppProvider = ({ children }) => {
   const fetchAnnouncements = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/announcements');
+      const res = await fetch('/app/api/announcements');
       if (res.ok) {
         const data = await res.json();
         setAnnouncements(data);
@@ -28,7 +28,7 @@ export const AppProvider = ({ children }) => {
 
   const addAnnouncement = async (announcement) => {
     try {
-      const res = await fetch('/api/announcements', {
+      const res = await fetch('/app/api/announcements', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(announcement)
@@ -48,7 +48,7 @@ export const AppProvider = ({ children }) => {
 
   const updateAnnouncement = async (id, updatedData) => {
     try {
-      const res = await fetch(`/api/announcements/${id}`, {
+      const res = await fetch(`/app/api/announcements/${id}`, {
         method: 'PUT',
         headers: getHeaders(),
         body: JSON.stringify(updatedData)
@@ -66,7 +66,7 @@ export const AppProvider = ({ children }) => {
 
   const deleteAnnouncement = async (id) => {
     try {
-      const res = await fetch(`/api/announcements/${id}`, {
+      const res = await fetch(`/app/api/announcements/${id}`, {
         method: 'DELETE',
         headers: getHeaders()
       });
@@ -80,14 +80,12 @@ export const AppProvider = ({ children }) => {
 
   const duplicateAnnouncement = async (id) => {
     try {
-      const res = await fetch(`/api/announcements/${id}/duplicate`, {
-        method: 'POST',
-        headers: getHeaders()
-      });
-      if (res.ok) {
-        const copy = await res.json();
-        setAnnouncements(prev => [copy, ...prev]);
-      }
+      const existing = announcements.find(a => a.id === id);
+      if (!existing) return;
+      const { id: _, history, createdAt, updatedAt, publishedAt, scheduledAt, ...copyData } = existing;
+      copyData.name = copyData.name + " (Copy)";
+      copyData.status = "Draft";
+      await addAnnouncement(copyData);
     } catch (err) {
       console.error("Duplicate failed", err);
     }
@@ -112,7 +110,7 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider value={{
       plan, updateSubscription,
-      announcements, addAnnouncement, updateAnnouncement, deleteAnnouncement, duplicateAnnouncement,
+      announcements, addAnnouncement, updateAnnouncement, deleteAnnouncement, duplicateAnnouncement, fetchAnnouncements,
       loading
     }}>
       {children}
