@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Filter, Edit, Trash2, Copy } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useAppContext } from '../context/AppContext';
 import { Page, Layout } from '@shopify/polaris';
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Store, Calendar, ArrowLeft, Tag, Truck, Zap, Megaphone, Clock } from 'lucide-react';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router';
 import { useAppContext } from '../context/AppContext';
 import { Page, Layout } from '@shopify/polaris';
 
