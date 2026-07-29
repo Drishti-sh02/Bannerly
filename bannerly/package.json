@@ -2,7 +2,7 @@
   "name": "bannerly",
   "private": true,
   "scripts": {
-    "build": "react-router build",
+    "build": "npm install --prefix .. && react-router build",
     "dev": "shopify app dev",
     "config:link": "shopify app config link",
     "generate": "shopify app generate",
