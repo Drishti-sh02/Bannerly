@@ -5,6 +5,11 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [announcements, setAnnouncements] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [plan, setPlan] = useState('free');
+
+  const getHeaders = () => {
+    return { 'Content-Type': 'application/json' };
+  };
 
   const fetchAnnouncements = async () => {
     setLoading(true);
@@ -88,6 +93,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+
   const updateSubscription = async (newPlan) => {
     try {
       const res = await fetch('/api/subscription', {
@@ -105,7 +111,6 @@ export const AppProvider = ({ children }) => {
 
   return (
     <AppContext.Provider value={{
-      isAuthenticated, user, login, logout,
       plan, updateSubscription,
       announcements, addAnnouncement, updateAnnouncement, deleteAnnouncement, duplicateAnnouncement,
       loading
