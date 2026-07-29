@@ -1,4 +1,4 @@
-import { json } from "@remix-run/node";
+// Remove @remix-run/node
 import { authenticate } from "../shopify.server";
 import prisma from "../db.server";
 
@@ -37,15 +37,15 @@ export async function action({ request, params }) {
       });
     }
 
-    return json(announcement);
+    return Response.json(announcement);
   }
 
   if (method === "DELETE") {
     await prisma.announcement.delete({
       where: { id, shop: session.shop }
     });
-    return json({ success: true });
+    return Response.json({ success: true });
   }
 
-  return json({ error: "Method not allowed" }, { status: 405 });
+  return Response.json({ error: "Method not allowed" }, { status: 405 });
 }

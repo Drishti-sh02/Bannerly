@@ -1,4 +1,4 @@
-import { json } from "@remix-run/node";
+// Remove @remix-run/node
 import { authenticate } from "../shopify.server";
 import prisma from "../db.server";
 
@@ -9,7 +9,7 @@ export async function loader({ request }) {
     orderBy: { createdAt: 'desc' },
     include: { history: true }
   });
-  return json(announcements);
+  return Response.json(announcements);
 }
 
 export async function action({ request }) {
@@ -39,8 +39,8 @@ export async function action({ request }) {
       });
     }
 
-    return json(announcement);
+    return Response.json(announcement);
   }
 
-  return json({ error: "Method not allowed" }, { status: 405 });
+  return Response.json({ error: "Method not allowed" }, { status: 405 });
 }
