@@ -2,7 +2,7 @@
   "name": "bannerly",
   "private": true,
   "scripts": {
-    "build": "npm install --prefix .. --legacy-peer-deps && prisma generate && react-router build",
+    "build": "npm install --prefix .. --legacy-peer-deps && prisma generate && prisma migrate deploy && react-router build",
     "dev": "shopify app dev",
     "config:link": "shopify app config link",
     "generate": "shopify app generate",
