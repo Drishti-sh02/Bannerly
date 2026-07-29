@@ -73,7 +73,8 @@ export default defineConfig({
         find: '@shopify/app-bridge-react',
         replacement: path.resolve(__dirname, 'node_modules/@shopify/app-bridge-react')
       }
-    ]
+    ],
+    dedupe: ['react', 'react-dom', 'react-router']
   },
   ssr: {
     noExternal: ['lucide-react', '@shopify/polaris', '@shopify/shopify-app-react-router'],
