@@ -1,69 +1,15 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 
 const AppContext = createContext();
 
-export function AppProvider({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('isAuthenticated') === 'true';
-    }
-    return false;
-  });
-  
-  const [user, setUser] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('user');
-      return saved ? JSON.parse(saved) : null;
-    }
-    return null;
-  });
-
-  const [plan, setPlan] = useState('Free');
+export const AppProvider = ({ children }) => {
   const [announcements, setAnnouncements] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  // Headers for API calls
-  const getHeaders = useCallback(() => {
-    return {
-      'Content-Type': 'application/json',
-      'x-merchant-id': user?.id || ''
-    };
-  }, [user]);
-
-  // Fetch initial data when authenticated
-  useEffect(() => {
-    if (isAuthenticated && user?.id) {
-      fetchProfile();
-      fetchAnnouncements();
-    }
-  }, [isAuthenticated, user?.id]);
-
-  // Sync basic auth state
-  useEffect(() => {
-    localStorage.setItem('isAuthenticated', isAuthenticated);
-    if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('user');
-    }
-  }, [isAuthenticated, user]);
-
-  const fetchProfile = async () => {
-    try {
-      const res = await fetch('/api/merchant/profile', { headers: getHeaders() });
-      if (res.ok) {
-        const data = await res.json();
-        setPlan(data.subscription?.plan || 'Free');
-      }
-    } catch (err) {
-      console.error("Failed to fetch profile", err);
-    }
-  };
 
   const fetchAnnouncements = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/announcements', { headers: getHeaders() });
+      const res = await fetch('/api/announcements');
       if (res.ok) {
         const data = await res.json();
         setAnnouncements(data);
@@ -75,30 +21,11 @@ export function AppProvider({ children }) {
     }
   };
 
-  const login = async (userData) => {
-    try {
-      // Direct approach: redirect to the Shopify app login route
-      window.location.href = `/auth/login?shop=${userData.shopDomain}`;
-      // Return a promise that doesn't resolve to prevent further state updates while navigating away
-      return new Promise(() => {});
-    } catch (err) {
-      console.error("Login failed", err);
-      return false;
-    }
-  };
-
-  const logout = () => {
-    setUser(null);
-    setIsAuthenticated(false);
-    setPlan('Free');
-    setAnnouncements([]);
-  };
-
   const addAnnouncement = async (announcement) => {
     try {
       const res = await fetch('/api/announcements', {
         method: 'POST',
-        headers: getHeaders(),
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(announcement)
       });
       if (res.ok) {
